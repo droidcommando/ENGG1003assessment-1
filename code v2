@@ -1,0 +1,70 @@
+#include <stdio.h>
+
+#include <stdlib.h>
+
+
+
+
+
+
+
+int main(){
+
+	FILE *fp;
+
+	char out, exit;
+	int key, in, selec;
+
+
+	char fileloc[100];
+
+	printf("Enter the number corresponding to the task you want to complete:\n"
+
+		"1. rotation cipher encryption\n"
+
+		"2. rotation cipher decryption\n");
+
+	scanf("%d", &selec);
+
+	printf("enter the key for your encryption/decryption\n");
+
+	scanf("%d", &key);
+
+	printf("what is the file called?(include the .txt)\n");
+	scanf("%s", &fileloc);
+
+	scanf("%c", &exit);
+	switch(selec){
+		case 1  :
+			fp = fopen(fileloc, "r+");
+
+			while(!feof(fp)){
+				fseek(fp, 1, SEEK_CUR);
+				in = fgetc(fp);
+				out = (in + (key % 26));
+				fseek(fp, -1, SEEK_CUR);
+				fputc(out, fp);
+				fseek(fp, -1, SEEK_CUR);
+			}
+			fclose(fp);
+			break;
+		case 2	:
+			while(!feof(fp)){
+				fseek(fp, 1, SEEK_CUR);
+				in = fgetc(fp);
+				out = (in - (key % 26));
+				fseek(fp, -1, SEEK_CUR);
+				fputc(out, fp);
+				fseek(fp, -1, SEEK_CUR);
+			}
+			fclose(fp);
+			break;
+
+		default :
+            
+			printf("invalid selection");
+
+			break;
+		}
+scanf("%c", &exit);
+ }
